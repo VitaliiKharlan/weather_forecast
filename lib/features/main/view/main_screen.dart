@@ -94,7 +94,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
@@ -119,6 +118,9 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       bottomNavigationBar: NavBar(
+        // cityCoordinate: cities?.first,
+        weatherForecastDetails: weatherForecastDetails?.first,
+        weatherForecastHourlyDetails: weatherForecastHourlyDetails?.first,
         pageIndex: _selectedTab,
         onTap: (index) {
           if (index == _selectedTab) {
@@ -133,7 +135,7 @@ class _MainScreenState extends State<MainScreen> {
           }
         },
       ),
-      backgroundColor: Colors.lightBlueAccent,
+      // backgroundColor: Colors.lightBlueAccent,
       body: PageView.builder(
         itemBuilder: (context, index) {
           return _CityPage(
@@ -147,8 +149,6 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
-
-
 }
 
 class BackgroundWidget extends StatelessWidget {
@@ -158,8 +158,14 @@ class BackgroundWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
       left: 0,
+      right: 0,
       bottom: 0,
-      child: Image.asset(AppImages.backgroundMainImage),
+
+
+      child: Image.asset(
+        AppImages.backgroundMainImage,
+        fit: BoxFit.fill,
+      ),
     );
   }
 }
@@ -173,7 +179,10 @@ class HouseWidget extends StatelessWidget {
       left: 54,
       bottom: 184,
       height: 280,
-      child: Image.asset(AppImages.backgroundHouseImage),
+      child: Image.asset(
+        AppImages.backgroundHouseImage,
+        fit: BoxFit.fill,
+      ),
     );
   }
 }
@@ -350,6 +359,9 @@ class _CityPage extends StatelessWidget {
     return (cityCoordinates == null)
         ? const Center(child: CircularProgressIndicator())
         : Stack(
+      fit: StackFit.expand,
+      clipBehavior: Clip.hardEdge,
+
             children: [
               const BackgroundWidget(),
               const HouseWidget(),

@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:weather_forecast/features/favorite_cities/favorite_cities.dart';
 import 'package:weather_forecast/features/service_of_geolocation/service_of_geolocation.dart';
 import 'package:weather_forecast/features/theme/app.images.dart';
+import 'package:weather_forecast/repositories/weather_details/models/weather_forecast_details.dart';
+import 'package:weather_forecast/repositories/weather_details/models/weather_forecast_hourly_details.dart';
 
 class NavBar extends StatelessWidget {
+  // final CityCoordinate? cityCoordinate;
+  final WeatherForecastDetails? weatherForecastDetails;
+  final WeatherForecastHourlyDetails? weatherForecastHourlyDetails;
   final int pageIndex;
   final Function(int) onTap;
 
   const NavBar({
     super.key,
+    // required this.cityCoordinate,
+    required this.weatherForecastDetails,
+    required this.weatherForecastHourlyDetails,
     required this.pageIndex,
     required this.onTap,
   });
@@ -15,14 +24,21 @@ class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      // fit: StackFit.loose,
+      // clipBehavior: Clip.none,
       children: [
         Positioned(
           left: 0,
+          right: 0,
           bottom: 0,
-          child: Image.asset(AppImages.backgroundMainImage),
+          child: Image.asset(
+            AppImages.backgroundMainImage,
+            fit: BoxFit.fill,
+          ),
         ),
         Positioned(
           left: 0,
+          right: 0,
           bottom: 0,
           child: Image.asset(AppImages.bottomNavigationBarRectangle),
         ),
@@ -55,11 +71,22 @@ class NavBar extends StatelessWidget {
                     );
                   },
                 ),
+                // FavoriteCitiesWidget
                 navItem(
                   const AssetImage(
                       'assets/icons/bottom_navigation_bar_list_icon.png'),
                   pageIndex == 1,
-                  onTap: () => onTap(1),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FavoriteCitiesWidget(
+                          // cityCoordinate:cityCoordinate,
+                          weatherForecastDetails: weatherForecastDetails,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

@@ -42,7 +42,7 @@ class ListHourlyDetails {
   final List<Weather> weather;
   final Clouds clouds;
   final Wind wind;
-  final int visibility;
+  final int? visibility;
   final double pop;
   final Sys sys;
   final DateTime dtTxt;

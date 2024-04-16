@@ -37,7 +37,7 @@ ListHourlyDetails _$ListHourlyDetailsFromJson(Map<String, dynamic> json) =>
           .toList(),
       clouds: Clouds.fromJson(json['clouds'] as Map<String, dynamic>),
       wind: Wind.fromJson(json['wind'] as Map<String, dynamic>),
-      visibility: json['visibility'] as int,
+      visibility: json['visibility'] as int?,
       pop: (json['pop'] as num).toDouble(),
       sys: Sys.fromJson(json['sys'] as Map<String, dynamic>),
       dtTxt: DateTime.parse(json['dt_txt'] as String),
