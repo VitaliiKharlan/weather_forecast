@@ -30,9 +30,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-
-
       backgroundColor: const Color(0xFF2E335A),
       appBar: AppBar(
         leading: IconButton(
@@ -60,7 +57,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
         titleTextStyle: AppTextStyle.defaultSemiBoldLargeTitle
             .copyWith(color: AppColors.solidDarkParametersButtonShort2),
       ),
-
       body: ListView(
         physics: const BouncingScrollPhysics(),
         children: [

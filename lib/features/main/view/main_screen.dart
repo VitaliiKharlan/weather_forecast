@@ -7,6 +7,7 @@ import 'package:weather_forecast/features/controllers/air_pollution/air_pollutio
 import 'package:weather_forecast/features/controllers/city/city_controller.dart';
 import 'package:weather_forecast/features/controllers/coord/coord_controller.dart';
 import 'package:weather_forecast/features/controllers/hourly_forecast/hourly_forecast_controller.dart';
+import 'package:weather_forecast/features/local_weather_search/view/local_weather_search.dart';
 
 import 'package:weather_forecast/repositories/weather_details/models/air_pollution_details.dart';
 import 'package:weather_forecast/repositories/weather_details/models/weather_forecast_hourly_details.dart';
@@ -153,7 +154,15 @@ class _MainScreenState extends State<MainScreen> {
         child: FloatingActionButton(
           backgroundColor: Colors.white,
           elevation: 0,
-          onPressed: () => debugPrint('Add Button pressed'),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LocalWeatherSearch(),
+              ),
+            );
+          },
+
           shape: RoundedRectangleBorder(
             side: const BorderSide(
               width: 4,
