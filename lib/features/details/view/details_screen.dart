@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:weather_forecast/features/theme/app_colors.dart';
+import 'package:weather_forecast/features/theme/app_text_style.dart';
 
 import '../../../repositories/weather_details/models/weather_forecast_hourly_details.dart';
 import '../../../repositories/weather_details/models/air_pollution_details.dart';
@@ -28,7 +30,37 @@ class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+
+
       backgroundColor: const Color(0xFF2E335A),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.chevron_left,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+        ),
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color(0xFF2E335A),
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: Text(
+          'Details \n',
+          style: AppTextStyle.defaultTextDarkSemiBold.copyWith(
+            color: Colors.white.withOpacity(0.72),
+            fontSize: 20,
+            height: 1.2,
+          ),
+          maxLines: 2,
+        ),
+        titleTextStyle: AppTextStyle.defaultSemiBoldLargeTitle
+            .copyWith(color: AppColors.solidDarkParametersButtonShort2),
+      ),
+
       body: ListView(
         physics: const BouncingScrollPhysics(),
         children: [

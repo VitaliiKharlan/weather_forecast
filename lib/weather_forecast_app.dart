@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weather_forecast/features/main/view/main_screen.dart';
+
+import 'features/main/view/main_screen.dart';
 
 class WeatherForecastApp extends StatelessWidget {
   const WeatherForecastApp({super.key});

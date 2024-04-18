@@ -10,4 +10,8 @@ abstract class CitiesCoordinates {
   // Odessa
   static const double latOfOdessaUA = 46.4843023;
   static const double lonOfOdessaUA = 30.7322878;
+
+  // London
+  static const double latOfLondonUK = 37.1289771;
+  static const double lonOfLondonUK = -84.0832646;
 }

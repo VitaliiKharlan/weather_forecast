@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:weather_forecast/features/favorite_cities/favorite_cities.dart';
 import 'package:weather_forecast/features/service_of_geolocation/service_of_geolocation.dart';
 import 'package:weather_forecast/features/theme/app.images.dart';
+import 'package:weather_forecast/repositories/weather_details/models/city_coordinate.dart';
 import 'package:weather_forecast/repositories/weather_details/models/weather_forecast_details.dart';
 import 'package:weather_forecast/repositories/weather_details/models/weather_forecast_hourly_details.dart';
 
 class NavBar extends StatelessWidget {
-  // final CityCoordinate? cityCoordinate;
-  final WeatherForecastDetails? weatherForecastDetails;
+  final List<CityCoordinate>? cityCoordinates;
+  final List<WeatherForecastDetails>? weatherForecastDetails;
   final WeatherForecastHourlyDetails? weatherForecastHourlyDetails;
   final int pageIndex;
   final Function(int) onTap;
 
   const NavBar({
     super.key,
-    // required this.cityCoordinate,
+    required this.cityCoordinates,
     required this.weatherForecastDetails,
     required this.weatherForecastHourlyDetails,
     required this.pageIndex,
@@ -81,7 +82,7 @@ class NavBar extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => FavoriteCitiesWidget(
-                          // cityCoordinate:cityCoordinate,
+                          cityCoordinates: cityCoordinates,
                           weatherForecastDetails: weatherForecastDetails,
                         ),
                       ),

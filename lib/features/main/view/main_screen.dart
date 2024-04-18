@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
+import 'package:weather_forecast/features/constants/cities_names.dart';
+import 'package:weather_forecast/features/constants/lat_lon.dart';
 
 import 'package:weather_forecast/features/controllers/air_pollution/air_pollution_controller.dart';
 import 'package:weather_forecast/features/controllers/city/city_controller.dart';
@@ -47,38 +49,86 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    final cityController = CityController();
+    // final cityController = CityController();
+    final cityController = CityController(
+      cityNames: [
+        CitiesNames.first,
+        CitiesNames.second,
+        CitiesNames.third,
+        CitiesNames.fourth,
+      ],
+    );
+
     cityController.init();
     cityController.addListener(() {
       setState(() {
         cities = cityController.cities;
+
+        final hourlyWeatherForecastController = HourlyForecastController(
+          cities: cityController.cities
+              .map((e) => LatLon(lat: e.lat, lon: e.lon))
+              .toList(),
+        );
+
+        hourlyWeatherForecastController.init();
+        hourlyWeatherForecastController.addListener(() {
+          setState(() {
+            weatherForecastHourlyDetails =
+                hourlyWeatherForecastController.weatherForecastHourlyDetails;
+          });
+        });
+
+        final detailsController = CoordController(
+          cities: cityController.cities
+              .map((e) => LatLon(lat: e.lat, lon: e.lon))
+              .toList(),
+        );
+        detailsController.init();
+        detailsController.addListener(() {
+          setState(() {
+            weatherForecastDetails = detailsController.details;
+          });
+        });
+
+        final airPollutionDetailsController = AirPollutionController(
+          cities: cityController.cities
+              .map((e) => LatLon(lat: e.lat, lon: e.lon))
+              .toList(),
+        );
+        airPollutionDetailsController.init();
+        airPollutionDetailsController.addListener(() {
+          setState(() {
+            airPollutionDetails =
+                airPollutionDetailsController.airPollutionDetails;
+          });
+        });
       });
     });
 
-    final detailsController = CoordController();
-    detailsController.init();
-    detailsController.addListener(() {
-      setState(() {
-        weatherForecastDetails = detailsController.details;
-      });
-    });
+    // final detailsController = CoordController();
+    // detailsController.init();
+    // detailsController.addListener(() {
+    //   setState(() {
+    //     weatherForecastDetails = detailsController.details;
+    //   });
+    // });
+    //
+    // final airPollutionDetailsController = AirPollutionController();
+    // airPollutionDetailsController.init();
+    // airPollutionDetailsController.addListener(() {
+    //   setState(() {
+    //     airPollutionDetails = airPollutionDetailsController.airPollutionDetails;
+    //   });
+    // });
 
-    final airPollutionDetailsController = AirPollutionController();
-    airPollutionDetailsController.init();
-    airPollutionDetailsController.addListener(() {
-      setState(() {
-        airPollutionDetails = airPollutionDetailsController.airPollutionDetails;
-      });
-    });
-
-    final hourlyWeatherForecastController = HourlyForecastController();
-    hourlyWeatherForecastController.init();
-    hourlyWeatherForecastController.addListener(() {
-      setState(() {
-        weatherForecastHourlyDetails =
-            hourlyWeatherForecastController.weatherForecastHourlyDetails;
-      });
-    });
+    // final hourlyWeatherForecastController = HourlyForecastController();
+    // hourlyWeatherForecastController.init();
+    // hourlyWeatherForecastController.addListener(() {
+    //   setState(() {
+    //     weatherForecastHourlyDetails =
+    //         hourlyWeatherForecastController.weatherForecastHourlyDetails;
+    //   });
+    // });
 
     items = [
       NavBarModel(
@@ -118,8 +168,8 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       bottomNavigationBar: NavBar(
-        // cityCoordinate: cities?.first,
-        weatherForecastDetails: weatherForecastDetails?.first,
+        cityCoordinates: cities,
+        weatherForecastDetails: weatherForecastDetails,
         weatherForecastHourlyDetails: weatherForecastHourlyDetails?.first,
         pageIndex: _selectedTab,
         onTap: (index) {
@@ -160,8 +210,6 @@ class BackgroundWidget extends StatelessWidget {
       left: 0,
       right: 0,
       bottom: 0,
-
-
       child: Image.asset(
         AppImages.backgroundMainImage,
         fit: BoxFit.fill,
@@ -359,9 +407,8 @@ class _CityPage extends StatelessWidget {
     return (cityCoordinates == null)
         ? const Center(child: CircularProgressIndicator())
         : Stack(
-      fit: StackFit.expand,
-      clipBehavior: Clip.hardEdge,
-
+            fit: StackFit.expand,
+            clipBehavior: Clip.hardEdge,
             children: [
               const BackgroundWidget(),
               const HouseWidget(),

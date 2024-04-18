@@ -1,22 +1,29 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
 import 'package:intl/intl.dart';
 
 import 'package:weather_forecast/features/theme/app_colors.dart';
 import 'package:weather_forecast/features/theme/app_text_style.dart';
 import 'package:weather_forecast/repositories/weather_details/models/city_coordinate.dart';
-
 import '../../../repositories/weather_details/models/weather_forecast_details.dart';
 
-class FavoriteCitiesWidget extends StatelessWidget {
-  final WeatherForecastDetails? weatherForecastDetails;
+class FavoriteCitiesWidget extends StatefulWidget {
+  final List<CityCoordinate>? cityCoordinates;
+  final List<WeatherForecastDetails>? weatherForecastDetails;
+
 
   const FavoriteCitiesWidget({
     super.key,
-    this.weatherForecastDetails,
+    required this.cityCoordinates,
+    required this.weatherForecastDetails,
   });
+
+  @override
+  State<FavoriteCitiesWidget> createState() => _FavoriteCitiesWidgetState();
+}
+
+class _FavoriteCitiesWidgetState extends State<FavoriteCitiesWidget> {
+  // List<CityCoordinate>? cities = [];
+  // List<WeatherForecastDetails>? weatherForecastDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -76,12 +83,12 @@ class FavoriteCitiesWidget extends StatelessWidget {
         child: ListView.builder(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
-          itemCount: 4,
+          itemCount: widget.cityCoordinates?.length,
           itemExtent: 120,
           itemBuilder: (BuildContext context, int index) {
             return _FavoriteCitiesItemWidget(
-              weatherForecastDetails: weatherForecastDetails,
-              citiesNameIndex: index,
+              cityCoordinates: widget.cityCoordinates![index],
+              weatherForecastDetails: widget.weatherForecastDetails?[index],
             );
           },
         ),
@@ -90,26 +97,13 @@ class FavoriteCitiesWidget extends StatelessWidget {
   }
 }
 
-// PageView.builder(
-// itemBuilder: (context, index) {
-// return _CityPage(
-// cityCoordinates: cities?[index],
-// weatherForecastDetails: weatherForecastDetails?[index],
-// airPollutionDetails: airPollutionDetails?[index],
-// weatherForecastHourlyDetails: weatherForecastHourlyDetails?[index],
-// );
-// },
-// itemCount: cities?.length,
-// ),
-
 class _FavoriteCitiesItemWidget extends StatelessWidget {
   final WeatherForecastDetails? weatherForecastDetails;
-
-  final int citiesNameIndex;
+  final CityCoordinate cityCoordinates;
 
   const _FavoriteCitiesItemWidget({
     required this.weatherForecastDetails,
-    required this.citiesNameIndex,
+    required this.cityCoordinates,
   });
 
   @override
@@ -216,38 +210,5 @@ class _FavoriteCitiesItemWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class _CityPage extends StatelessWidget {
-  final CityCoordinate? cityCoordinates;
-  final WeatherForecastDetails? weatherForecastDetails;
-
-  // final AirPollutionDetails? airPollutionDetails;
-  // final WeatherForecastHourlyDetails? weatherForecastHourlyDetails;
-
-  const _CityPage({
-    required this.cityCoordinates,
-    required this.weatherForecastDetails,
-    // required this.airPollutionDetails,
-    // required this.weatherForecastHourlyDetails,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return (cityCoordinates == null)
-        ? const Center(child: CircularProgressIndicator())
-        : Stack(
-            children: [
-              // const BackgroundWidget(),
-              // const HouseWidget(),
-              FavoriteCitiesWidget(
-                // cityCoordinate: cityCoordinates!,
-                weatherForecastDetails: weatherForecastDetails,
-                // airPollutionDetails: airPollutionDetails,
-                // weatherForecastHourlyDetails: weatherForecastHourlyDetails,
-              ),
-            ],
-          );
   }
 }
