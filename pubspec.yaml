@@ -84,9 +84,6 @@ flutter:
         - asset: assets/fonts/sfProText/bold.ttf
           weight: 700
 
-
-
-
     - family: RobotoMono
       fonts:
         - asset: assets/fonts/robotoMono/regular.ttf
@@ -105,21 +102,21 @@ flutter:
           weight: 700
           style: italic
 
-    - family: Parisienne
-      fonts:
-        - asset: assets/fonts/parisienne/regular.ttf
-
-    - family: DM Sans
-      fonts:
-        - asset: assets/fonts/dm_sans/regular.ttf
-          weight: 400
-
-    - family: Lufga
-      fonts:
-        - asset: assets/fonts/lufga/medium.ttf
-          weight: 500
-        - asset: assets/fonts/lufga/bold.ttf
-          weight: 600
+#    - family: Parisienne
+#      fonts:
+#        - asset: assets/fonts/parisienne/regular.ttf
+#
+#    - family: DM Sans
+#      fonts:
+#        - asset: assets/fonts/dm_sans/regular.ttf
+#          weight: 400
+#
+#    - family: Lufga
+#      fonts:
+#        - asset: assets/fonts/lufga/medium.ttf
+#          weight: 500
+#        - asset: assets/fonts/lufga/bold.ttf
+#          weight: 600
 
 
 

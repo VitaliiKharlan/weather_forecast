@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:weather_forecast/features/controllers/city/city_controller.dart';
-import 'package:weather_forecast/features/theme/app_text_style.dart';
-import 'package:weather_forecast/repositories/weather_details/local_weather_search_lat_lon_repository.dart';
-import 'package:weather_forecast/repositories/weather_details/local_weather_search_repository.dart';
-import 'package:weather_forecast/repositories/weather_details/models/weather_forecast_details.dart';
+
+import '../../controllers/city/city_controller.dart';
+import '../../theme/app_text_style.dart';
+import '../../../repositories/local_weather_search/local_weather_search_lat_lon_repository.dart';
+import '../../../repositories/local_weather_search/local_weather_search_repository.dart';
+import '../../../repositories/weather_details/models/weather_forecast_details.dart';
 
 class LocalWeatherSearch extends StatelessWidget {
   const LocalWeatherSearch({super.key});
@@ -36,7 +37,6 @@ class LocalWeatherSearch extends StatelessWidget {
                 context: context,
                 delegate: CitySearch(),
               );
-
             },
           ),
         ],
@@ -84,6 +84,7 @@ class CitySearch extends SearchDelegate<String> {
       IconButton(
         icon: const Icon(Icons.clear),
         onPressed: () {
+          // query = '';
           if (query.isEmpty) {
             close(context, '');
           } else {
@@ -192,6 +193,7 @@ class CitySearch extends SearchDelegate<String> {
         return ListTile(
           onTap: () {
             query = suggestion;
+
             showResults(context);
             cityController.addNewCity('Energodar');
           },
@@ -199,6 +201,7 @@ class CitySearch extends SearchDelegate<String> {
             Icons.location_city,
             color: Colors.white,
           ),
+          // title: Text(suggestion),
           title: RichText(
             text: TextSpan(
               text: queryText,
@@ -225,8 +228,6 @@ class CitySearch extends SearchDelegate<String> {
   }
 }
 
-// implementation with internet access
-//
 Widget buildResultSuccess(WeatherForecastDetails weatherForecastDetails) {
   return Container(
     decoration: const BoxDecoration(
@@ -288,4 +289,3 @@ Widget buildResultSuccess(WeatherForecastDetails weatherForecastDetails) {
     ),
   );
 }
-

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_forecast/features/favorite_cities/favorite_cities.dart';
+import 'package:weather_forecast/features/favorite_cities/view/favorite_cities_screen.dart';
 import 'package:weather_forecast/features/service_of_geolocation/service_of_geolocation.dart';
 import 'package:weather_forecast/features/theme/app.images.dart';
 import 'package:weather_forecast/repositories/weather_details/models/city_coordinate.dart';

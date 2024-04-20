@@ -7,16 +7,6 @@ import '../../constants/lat_lon.dart';
 class HourlyForecastController extends ChangeNotifier {
   final List<LatLon> cities;
 
-  // = [
-  //   LatLon(
-  //       lat: CitiesCoordinates.latOfKyivUA, lon: CitiesCoordinates.lonOfKyivUA),
-  //   LatLon(
-  //       lat: CitiesCoordinates.latOfLvivUA, lon: CitiesCoordinates.lonOfLvivUA),
-  //   LatLon(
-  //       lat: CitiesCoordinates.latOfOdessaUA,
-  //       lon: CitiesCoordinates.lonOfOdessaUA),
-  // ];
-
   final List<WeatherForecastHourlyDetails> weatherForecastHourlyDetails = [];
 
   HourlyForecastController({

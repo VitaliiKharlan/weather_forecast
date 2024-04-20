@@ -1,13 +1,4 @@
 abstract class AppImages {
-  static const String backgroundImage = 'assets/images/background_image.jpg';
-
-  static const String bottomNavigationBarIconLeft =
-      'assets/icons/bottom_navigation_bar_icon_left.png';
-  static const String bottomNavigationBarIconMiddle =
-      'assets/icons/bottom_navigation_bar_icon_middle.png';
-  static const String bottomNavigationBarIconRight =
-      'assets/icons/bottom_navigation_bar_icon_right.png';
-
   static const String backgroundMainImage =
       'assets/images/background_main_image.png';
   static const String backgroundHouseImage =
@@ -44,12 +35,21 @@ abstract class AppImages {
       'assets/icons/small_icon_moon_cloud_fast_wind.png';
   static const String smallIconMoonCloudMidRain =
       'assets/icons/small_icon_moon_cloud_mid_rain.png';
-  static const String smallIconTornado =
-      'assets/icons/small_icon_tornado.png';
+  static const String smallIconTornado = 'assets/icons/small_icon_tornado.png';
   static const String smallIconSunCloudAngledRain =
       'assets/icons/small_icon_sun_cloud_angled_rain.png';
   static const String smallIconSunCloudMidRain =
       'assets/icons/small_icon_sun_cloud_mid_rain.png';
+
+  static const String bigIconMoonCloudFastWind =
+      'assets/icons/big_icon_moon_cloud_fast_wind.png';
+  static const String bigIconMoonCloudMidRain =
+      'assets/icons/big_icon_moon_cloud_mid_rain.png';
+  static const String bigIconTornado = 'assets/icons/big_icon_tornado.png';
+  static const String bigIconSunCloudAngledRain =
+      'assets/icons/big_icon_sun_cloud_angled_rain.png';
+  static const String bigIconSunCloudMidRain =
+      'assets/icons/big_icon_sun_cloud_mid_rain.png';
 
   static const String bottomNavigationBarTabBar =
       'assets/images/bottom_navigation_bar_tab_bar.png';

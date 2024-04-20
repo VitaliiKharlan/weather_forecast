@@ -170,26 +170,32 @@ class _HourlyForecastItemWidget extends StatelessWidget {
               const SizedBox(height: 20),
               (weatherIcon == '01n')
                   ? const Image(
-                      image: AssetImage(AppImages.smallIconSunCloudMidRain),
+                      image: AssetImage(
+                        AppImages.smallIconSunCloudMidRain,
+                      ),
                     )
                   : (weatherIcon == '02n')
                       ? const Image(
-                          image:
-                              AssetImage(AppImages.smallIconMoonCloudFastWind),
+                          image: AssetImage(
+                            AppImages.smallIconMoonCloudFastWind,
+                          ),
                         )
                       : (weatherIcon == '03n')
                           ? const Image(
                               image: AssetImage(
-                                  AppImages.smallIconSunCloudAngledRain),
+                                AppImages.smallIconSunCloudAngledRain,
+                              ),
                             )
                           : (weatherIcon == '03n')
                               ? const Image(
                                   image: AssetImage(
-                                      AppImages.smallIconMoonCloudMidRain),
+                                    AppImages.smallIconMoonCloudMidRain,
+                                  ),
                                 )
                               : const Image(
                                   image: AssetImage(
-                                      AppImages.smallIconSunCloudAngledRain),
+                                    AppImages.smallIconSunCloudAngledRain,
+                                  ),
                                 ),
               Expanded(
                 child: Padding(

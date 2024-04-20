@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:weather_forecast/features/theme/app_colors.dart';
 import 'package:weather_forecast/features/theme/app_text_style.dart';
 import 'package:weather_forecast/repositories/weather_details/models/city_coordinate.dart';
-import '../../../repositories/weather_details/models/weather_forecast_details.dart';
+import '../../../../repositories/weather_details/models/weather_forecast_details.dart';
 
 class FavoriteCitiesWidget extends StatefulWidget {
   final List<CityCoordinate>? cityCoordinates;

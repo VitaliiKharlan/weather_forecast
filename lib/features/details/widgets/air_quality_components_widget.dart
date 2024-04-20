@@ -7,8 +7,10 @@ import '../../../repositories/weather_details/models/air_pollution_details.dart'
 class AirQualityComponentsWidget extends StatelessWidget {
   final AirPollutionDetails? airPollutionDetails;
 
-  const AirQualityComponentsWidget(
-      {super.key, required this.airPollutionDetails});
+  const AirQualityComponentsWidget({
+    super.key,
+    required this.airPollutionDetails,
+  });
 
   @override
   Widget build(BuildContext context) {

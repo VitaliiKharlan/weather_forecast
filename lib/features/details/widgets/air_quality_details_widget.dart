@@ -20,21 +20,6 @@ class AirQualityDetailsWidget extends StatefulWidget {
 }
 
 class _AirQualityDetailsWidgetState extends State<AirQualityDetailsWidget> {
-  // List<AirPollutionDetails>? airPollutionDetails;
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //
-  //   final airPollutionDetailsController = AirPollutionController();
-  //   airPollutionDetailsController.init();
-  //   airPollutionDetailsController.addListener(() {
-  //     setState(() {
-  //       airPollutionDetails = airPollutionDetailsController.airPollutionDetails;
-  //     });
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     final modelAirPollutionDetails = widget.airPollutionDetails;
@@ -89,11 +74,8 @@ class _AirQualityDetailsWidgetState extends State<AirQualityDetailsWidget> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Stack(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // const SizedBox(height: 12),
                       Positioned(
-                        // left: 12,
                         top: 12,
                         child: Row(
                           children: [
@@ -102,8 +84,9 @@ class _AirQualityDetailsWidgetState extends State<AirQualityDetailsWidget> {
                               height: 24,
                               width: 24,
                               colorFilter: ColorFilter.mode(
-                                  Colors.white.withOpacity(0.4),
-                                  BlendMode.srcIn),
+                                Colors.white.withOpacity(0.4),
+                                BlendMode.srcIn,
+                              ),
                             ),
                             Text(
                               '  AIR QUALITY',
@@ -114,7 +97,6 @@ class _AirQualityDetailsWidgetState extends State<AirQualityDetailsWidget> {
                           ],
                         ),
                       ),
-                      // const SizedBox(height: 20),
                       Positioned(
                         // left: 12,
                         top: 48,
@@ -202,7 +184,6 @@ class _AirQualityDetailsWidgetState extends State<AirQualityDetailsWidget> {
                           ],
                         ),
                       ),
-                      // const SizedBox(height: 40),
                       Positioned(
                         // left: 12,
                         bottom: 4,
@@ -237,7 +218,6 @@ class _AirQualityDetailsWidgetState extends State<AirQualityDetailsWidget> {
                               },
                               child: const Icon(Icons.chevron_right),
                             ),
-                            // Icon(Icons.add),
                           ],
                         ),
                       ),

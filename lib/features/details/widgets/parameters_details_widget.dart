@@ -62,7 +62,6 @@ class ParametersDetailsWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
-
       ],
     );
   }
@@ -129,8 +128,9 @@ class _UVIndexWidget extends StatelessWidget {
                               height: 24,
                               width: 24,
                               colorFilter: ColorFilter.mode(
-                                  Colors.white.withOpacity(0.4),
-                                  BlendMode.srcIn),
+                                Colors.white.withOpacity(0.4),
+                                BlendMode.srcIn,
+                              ),
                             ),
                             Text(
                               '  UV INDEX',
@@ -242,8 +242,9 @@ class _SunriseWidget extends StatelessWidget {
                               height: 24,
                               width: 24,
                               colorFilter: ColorFilter.mode(
-                                  Colors.white.withOpacity(0.4),
-                                  BlendMode.srcIn),
+                                Colors.white.withOpacity(0.4),
+                                BlendMode.srcIn,
+                              ),
                             ),
                             Text(
                               '  SUNRISE',
@@ -388,6 +389,3 @@ class _PressureWidget extends StatelessWidget {
     );
   }
 }
-
-
-

@@ -7,18 +7,6 @@ import '../../../repositories/weather_details/models/air_pollution_details.dart'
 class AirPollutionController extends ChangeNotifier {
   final List<LatLon> cities;
 
-  // = [
-  //   LatLon(
-  //       lat: CitiesCoordinates.latOfKyivUA,
-  //       lon: CitiesCoordinates.lonOfKyivUA),
-  //   LatLon(
-  //       lat: CitiesCoordinates.latOfLvivUA,
-  //       lon: CitiesCoordinates.lonOfLvivUA),
-  //   LatLon(
-  //       lat: CitiesCoordinates.latOfOdessaUA,
-  //       lon: CitiesCoordinates.lonOfOdessaUA),
-  // ];
-
   final List<AirPollutionDetails> airPollutionDetails = [];
 
   AirPollutionController({
