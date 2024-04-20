@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
-import 'package:weather_forecast/features/details/view/details_screen.dart';
-import 'package:weather_forecast/features/main/view/main_screen.dart';
-
-import 'package:weather_forecast/features/theme/app.images.dart';
+import 'package:weather_forecast/features/controllers/city/city_controller.dart';
 import 'package:weather_forecast/features/theme/app_text_style.dart';
 import 'package:weather_forecast/repositories/weather_details/local_weather_search_lat_lon_repository.dart';
 import 'package:weather_forecast/repositories/weather_details/local_weather_search_repository.dart';
-import 'package:weather_forecast/repositories/weather_details/models/air_pollution_details.dart';
-import 'package:weather_forecast/repositories/weather_details/models/city_coordinate.dart';
 import 'package:weather_forecast/repositories/weather_details/models/weather_forecast_details.dart';
-import 'package:weather_forecast/repositories/weather_details/models/weather_forecast_hourly_details.dart';
 
 class LocalWeatherSearch extends StatelessWidget {
   const LocalWeatherSearch({super.key});
@@ -39,20 +32,11 @@ class LocalWeatherSearch extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () async {
-              // 1. option - show results
-              //
               showSearch(
                 context: context,
                 delegate: CitySearch(),
               );
 
-              // 2. option - close search & return result
-              //
-              // final results = await showSearch(
-              //   context: context,
-              //   delegate: CitySearch(),
-              // );
-              // print('Result: $results');
             },
           ),
         ],
@@ -94,27 +78,12 @@ class LocalWeatherSearch extends StatelessWidget {
 }
 
 class CitySearch extends SearchDelegate<String> {
-  final cities = [
-    'London',
-    'Berlin',
-    'Paris',
-    'Tokyo',
-    'Canberra',
-  ];
-
-  final recentCities = [
-    'London',
-    'Berlin',
-    'Paris',
-  ];
-
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
         icon: const Icon(Icons.clear),
         onPressed: () {
-          // query = '';
           if (query.isEmpty) {
             close(context, '');
           } else {
@@ -134,39 +103,6 @@ class CitySearch extends SearchDelegate<String> {
     );
   }
 
-  // implementation without internet access
-  //
-  // @override
-  // Widget buildResults(BuildContext context) {
-  //   return Center(
-  //     child: Column(
-  //       mainAxisAlignment: MainAxisAlignment.center,
-  //       children: [
-  //         const Icon(Icons.location_city, size: 120),
-  //         const SizedBox(height: 48),
-  //         Text(
-  //           query,
-  //           style: const TextStyle(
-  //             color: Colors.black,
-  //             fontWeight: FontWeight.bold,
-  //             fontSize: 40,
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  // implementation with internet access
-  // something went wrong
-  //
-  // @override
-  // Widget buildResults(BuildContext context) {
-  //   return const MainScreen();
-  // }
-
-  // implementation with internet access
-  //
   @override
   Widget buildResults(BuildContext context) {
     return FutureBuilder<WeatherForecastDetails>(
@@ -194,24 +130,6 @@ class CitySearch extends SearchDelegate<String> {
     );
   }
 
-  // implementation without internet access
-  //
-  // @override
-  // Widget buildSuggestions(BuildContext context) {
-  //   final suggestions = query.isEmpty
-  //       ? recentCities
-  //       : cities.where((city) {
-  //           final cityLower = city.toLowerCase();
-  //           final queryLower = query.toLowerCase();
-  //
-  //           return cityLower.startsWith(queryLower);
-  //         }).toList();
-  //
-  //   return buildSuggestionsSuccess(suggetions);
-  // }
-
-  // implementation with internet access
-  //
   @override
   Widget buildSuggestions(BuildContext context) {
     return Container(
@@ -274,29 +192,13 @@ class CitySearch extends SearchDelegate<String> {
         return ListTile(
           onTap: () {
             query = suggestion;
-
-            // 1. option - show results
-            //
             showResults(context);
-
-            // 2. option - close search & return result
-            //
-            // close(context, suggestion);
-
-            // 3. option - navigate to Result Page
-            //
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (BuildContext context) => ResultPage(suggestion),
-            //   ),
-            // );
+            cityController.addNewCity('Energodar');
           },
           leading: const Icon(
             Icons.location_city,
             color: Colors.white,
           ),
-          // title: Text(suggestion),
           title: RichText(
             text: TextSpan(
               text: queryText,
@@ -359,12 +261,6 @@ Widget buildResultSuccess(WeatherForecastDetails weatherForecastDetails) {
             color: Colors.white,
           ),
         ),
-        // const Icon(
-        //   Icons.add,
-        //   // weather.icon,
-        //   color: Colors.white,
-        //   size: 140,
-        // ),
         const SizedBox(height: 72),
         Text(
           weatherForecastDetails.weather.first.description.toUpperCase(),
@@ -386,12 +282,6 @@ Widget buildResultSuccess(WeatherForecastDetails weatherForecastDetails) {
                 color: Colors.white,
               ),
             ),
-            // Text(
-            //   '\u00B0',
-            //   style: style,
-            // ),
-
-            // Text('${weather.degrees}°', style: style),
           ],
         ),
       ],
@@ -399,26 +289,3 @@ Widget buildResultSuccess(WeatherForecastDetails weatherForecastDetails) {
   );
 }
 
-// Widget buildDegrees(WeatherForecastDetails weatherForecastDetails) {
-//   const style = TextStyle(
-//     fontSize: 100,
-//     fontWeight: FontWeight.bold,
-//     color: Colors.white,
-//   );
-//
-//   return const Row(
-//     mainAxisAlignment: MainAxisAlignment.center,
-//     children: [
-//       Text(
-//         ,
-//         style: style,
-//       ),
-//       Text(
-//         '\u00B0',
-//         style: style,
-//       ),
-//
-//       // Text('${weather.degrees}°', style: style),
-//     ],
-//   );
-// }

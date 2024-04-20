@@ -2,23 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 import 'package:weather_forecast/features/constants/cities_names.dart';
 import 'package:weather_forecast/features/constants/lat_lon.dart';
-
 import 'package:weather_forecast/features/controllers/air_pollution/air_pollution_controller.dart';
 import 'package:weather_forecast/features/controllers/city/city_controller.dart';
 import 'package:weather_forecast/features/controllers/coord/coord_controller.dart';
 import 'package:weather_forecast/features/controllers/hourly_forecast/hourly_forecast_controller.dart';
 import 'package:weather_forecast/features/local_weather_search/view/local_weather_search_screen.dart';
-
 import 'package:weather_forecast/repositories/weather_details/models/air_pollution_details.dart';
 import 'package:weather_forecast/repositories/weather_details/models/weather_forecast_hourly_details.dart';
 
-import '../../details/view/details_screen.dart';
-import 'nav_bar_model.dart';
-import 'nav_bar.dart';
-import '../../theme/app.images.dart';
-import '../../theme/app_text_style.dart';
 import '../../../repositories/weather_details/models/city_coordinate.dart';
 import '../../../repositories/weather_details/models/weather_forecast_details.dart';
+import '../../details/view/details_screen.dart';
+import '../../theme/app.images.dart';
+import '../../theme/app_text_style.dart';
+import 'nav_bar.dart';
+import 'nav_bar_model.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -50,16 +48,14 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    // final cityController = CityController();
-    final cityController = CityController(
-      cityNames: [
+    cityController.addNewCities(
+      [
         CitiesNames.first,
         CitiesNames.second,
         CitiesNames.third,
         CitiesNames.fourth,
       ],
     );
-
     cityController.init();
     cityController.addListener(() {
       setState(() {
@@ -105,31 +101,6 @@ class _MainScreenState extends State<MainScreen> {
         });
       });
     });
-
-    // final detailsController = CoordController();
-    // detailsController.init();
-    // detailsController.addListener(() {
-    //   setState(() {
-    //     weatherForecastDetails = detailsController.details;
-    //   });
-    // });
-    //
-    // final airPollutionDetailsController = AirPollutionController();
-    // airPollutionDetailsController.init();
-    // airPollutionDetailsController.addListener(() {
-    //   setState(() {
-    //     airPollutionDetails = airPollutionDetailsController.airPollutionDetails;
-    //   });
-    // });
-
-    // final hourlyWeatherForecastController = HourlyForecastController();
-    // hourlyWeatherForecastController.init();
-    // hourlyWeatherForecastController.addListener(() {
-    //   setState(() {
-    //     weatherForecastHourlyDetails =
-    //         hourlyWeatherForecastController.weatherForecastHourlyDetails;
-    //   });
-    // });
 
     items = [
       NavBarModel(

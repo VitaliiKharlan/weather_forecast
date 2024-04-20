@@ -7,8 +7,5 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final dio = Dio();
   dio.interceptors.add;
-
-  // WeatherForecastHourlyDetailsRepository().getWeatherForecastHourlyDetails(50, 50);
-
   runApp(const WeatherForecastApp());
 }
