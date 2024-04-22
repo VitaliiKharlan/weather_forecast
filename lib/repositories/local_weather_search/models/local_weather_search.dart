@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'local_weather_search.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class LocalWeatherSearch {
   LocalWeatherSearch({
     required this.name,
@@ -12,7 +12,6 @@ class LocalWeatherSearch {
   });
 
   final String name;
-
   final double lat;
   final double lon;
   final String country;
@@ -24,7 +23,7 @@ class LocalWeatherSearch {
 
   @override
   String toString() {
-    return 'CityCoordinate{'
+    return 'LocalWeatherSearch{'
         'name: $name, '
         'lat: $lat, '
         'lon: $lon, '
@@ -32,3 +31,4 @@ class LocalWeatherSearch {
         '}';
   }
 }
+

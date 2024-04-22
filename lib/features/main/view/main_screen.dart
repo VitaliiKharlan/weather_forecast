@@ -50,6 +50,8 @@ class _MainScreenState extends State<MainScreen> {
   List<AirPollutionDetails>? airPollutionDetails;
   List<WeatherForecastHourlyDetails>? weatherForecastHourlyDetails;
 
+  // LocalWeatherSearch? localWeatherSearch;
+
   @override
   void initState() {
     super.initState();
@@ -62,7 +64,7 @@ class _MainScreenState extends State<MainScreen> {
       ],
     );
 
-    cityController.init();
+    cityController.fetchListOfCities();
     cityController.addListener(() {
       setState(() {
         cities = cityController.cities;
@@ -122,6 +124,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // final localWeatherSearch = 'Berlin';
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
@@ -134,9 +137,13 @@ class _MainScreenState extends State<MainScreen> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => const LocalWeatherSearch(),
-              ),
+              MaterialPageRoute(builder: (context) => const LocalWeatherSearch()
+                  // builder: (context) => (localWeatherSearch == null)
+                  //     ? const Center(child: CircularProgressIndicator())
+                  //     : LocalWeatherSearch(
+                  //     localWeatherSearch: localWeatherSearch!,
+                  //   ),
+                  ),
             );
           },
           shape: RoundedRectangleBorder(
@@ -171,17 +178,92 @@ class _MainScreenState extends State<MainScreen> {
         },
       ),
       backgroundColor: Colors.lightBlueAccent,
-      body: PageView.builder(
-        itemBuilder: (context, index) {
-          return _CityPage(
-            cityCoordinates: cities?[index],
-            weatherForecastDetails: weatherForecastDetails?[index],
-            airPollutionDetails: airPollutionDetails?[index],
-            weatherForecastHourlyDetails: weatherForecastHourlyDetails?[index],
-          );
-        },
-        itemCount: cities?.length,
+      body: PageBuilderWidget(
+        cities: cities,
+        weatherForecastDetails: weatherForecastDetails,
+        airPollutionDetails: airPollutionDetails,
+        weatherForecastHourlyDetails: weatherForecastHourlyDetails,
       ),
+    );
+  }
+}
+
+class PageBuilderWidget extends StatefulWidget {
+  const PageBuilderWidget({
+    super.key,
+    required this.cities,
+    required this.weatherForecastDetails,
+    required this.airPollutionDetails,
+    required this.weatherForecastHourlyDetails,
+  });
+
+  final List<CityCoordinate>? cities;
+  final List<WeatherForecastDetails>? weatherForecastDetails;
+  final List<AirPollutionDetails>? airPollutionDetails;
+  final List<WeatherForecastHourlyDetails>? weatherForecastHourlyDetails;
+
+  @override
+  State<PageBuilderWidget> createState() => _PageBuilderWidgetState();
+}
+
+class _PageBuilderWidgetState extends State<PageBuilderWidget> {
+  final PageController _pageController = PageController(initialPage: 0);
+  int _activePage = 0;
+  final List<Widget> _pages = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        PageView.builder(
+          controller: _pageController,
+          onPageChanged: (int page) {
+            setState(() {
+              _activePage = page;
+            });
+          },
+          itemCount: widget.cities?.length,
+          itemBuilder: (context, index) {
+            return _CityPage(
+              cityCoordinates: widget.cities?[index],
+              weatherForecastDetails: widget.weatherForecastDetails?[index],
+              airPollutionDetails: widget.airPollutionDetails?[index],
+              weatherForecastHourlyDetails:
+                  widget.weatherForecastHourlyDetails?[index],
+            );
+          },
+        ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 40,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List<Widget>.generate(
+              // 4,
+              widget.cities?.length ?? 0,
+              (index) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: InkWell(
+                  onTap: () {
+                    _pageController.animateToPage(
+                      index,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeIn,
+                    );
+                  },
+                  child: CircleAvatar(
+                    radius: 4,
+                    backgroundColor:
+                        _activePage == index ? Colors.white : Colors.grey,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

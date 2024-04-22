@@ -7,7 +7,12 @@ import '../../../repositories/local_weather_search/local_weather_search_reposito
 import '../../../repositories/weather_details/models/weather_forecast_details.dart';
 
 class LocalWeatherSearch extends StatelessWidget {
-  const LocalWeatherSearch({super.key});
+  // final LocalWeatherSearch localWeatherSearch;
+
+  const LocalWeatherSearch({
+    super.key,
+    // required this.localWeatherSearch,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +41,7 @@ class LocalWeatherSearch extends StatelessWidget {
               showSearch(
                 context: context,
                 delegate: CitySearch(),
+                // delegate: CitySearch(localWeatherSearch: localWeatherSearch),
               );
             },
           ),
@@ -78,13 +84,23 @@ class LocalWeatherSearch extends StatelessWidget {
 }
 
 class CitySearch extends SearchDelegate<String> {
+  // final LocalWeatherSearch localWeatherSearch;
+
+  CitySearch({
+    super.searchFieldLabel,
+    super.searchFieldStyle,
+    super.searchFieldDecorationTheme,
+    super.keyboardType,
+    super.textInputAction,
+    // required this.localWeatherSearch,
+  });
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
         icon: const Icon(Icons.clear),
         onPressed: () {
-          // query = '';
           if (query.isEmpty) {
             close(context, '');
           } else {
@@ -140,7 +156,6 @@ class CitySearch extends SearchDelegate<String> {
             LocalWeatherSearchRepository.getLocalWeatherSearch(query: query),
         builder: (context, snapshot) {
           if (query.isEmpty) return buildNoSuggestions();
-
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return const Center(
@@ -183,6 +198,7 @@ class CitySearch extends SearchDelegate<String> {
   }
 
   Widget buildSuggestionsSuccess(List<String> suggestions) {
+    // final modelLocalWeatherSearch = localWeatherSearch;
     return ListView.builder(
       itemCount: suggestions.length,
       itemBuilder: (context, index) {
@@ -193,9 +209,9 @@ class CitySearch extends SearchDelegate<String> {
         return ListTile(
           onTap: () {
             query = suggestion;
-
             showResults(context);
             cityController.addNewCity('Energodar');
+            cityController.addNewCity('modelLocalWeatherSearch.key');
           },
           leading: const Icon(
             Icons.location_city,

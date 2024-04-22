@@ -19,7 +19,9 @@ class LocalWeatherSearchRepository {
       final lat = data['lat'];
       final lon = data['lon'];
       final country = data['country'];
+
       return '$city, $country \nlat=$lat, lon=$lon';
+
     }).toList();
     // print(cityNameCountryList);
 

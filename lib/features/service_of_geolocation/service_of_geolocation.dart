@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:weather_forecast/features/controllers/city/city_controller.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_text_style.dart';
@@ -18,6 +19,7 @@ class _ServiceOfGeolocationState extends State<ServiceOfGeolocation> {
   late LocationPermission permission;
 
   String _currentAddress = '';
+  String _currentCity = '';
 
   Future<Position> _getCurrentLocation() async {
     bool serviceEnabled;
@@ -65,6 +67,8 @@ class _ServiceOfGeolocationState extends State<ServiceOfGeolocation> {
 
       setState(() {
         _currentAddress = '${place.locality}, ${place.country}';
+        _currentCity = '${place.locality}';
+        cityController.addNewCity(_currentCity);
       });
     } catch (e) {
       // print(e);
