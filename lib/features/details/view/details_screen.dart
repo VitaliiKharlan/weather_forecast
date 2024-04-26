@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather_forecast/features/theme/app_colors.dart';
 import 'package:weather_forecast/features/theme/app_text_style.dart';
+import 'package:weather_forecast/repositories/weather_details/models/city_coordinate.dart';
 
 import '../../../repositories/weather_details/models/weather_forecast_hourly_details.dart';
 import '../../../repositories/weather_details/models/air_pollution_details.dart';
@@ -11,12 +12,14 @@ import '../widgets/main_details_widget.dart';
 import '../widgets/parameters_details_widget.dart';
 
 class DetailsScreen extends StatefulWidget {
-  final WeatherForecastDetails weatherForecastDetails;
-  final AirPollutionDetails airPollutionDetails;
-  final WeatherForecastHourlyDetails weatherForecastHourlyDetails;
+  final CityCoordinate? cityCoordinate;
+  final WeatherForecastDetails? weatherForecastDetails;
+  final AirPollutionDetails? airPollutionDetails;
+  final WeatherForecastHourlyDetails? weatherForecastHourlyDetails;
 
   const DetailsScreen({
     super.key,
+    required this.cityCoordinate,
     required this.weatherForecastDetails,
     required this.airPollutionDetails,
     required this.weatherForecastHourlyDetails,

@@ -2,12 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_forecast/features/controllers/city/city_controller.dart';
+import 'package:weather_forecast/features/details/view/details_screen.dart';
+
+import 'package:weather_forecast/repositories/weather_details/models/air_pollution_details.dart';
+import 'package:weather_forecast/repositories/weather_details/models/city_coordinate.dart';
+import 'package:weather_forecast/repositories/weather_details/models/weather_forecast_details.dart';
+import 'package:weather_forecast/repositories/weather_details/models/weather_forecast_hourly_details.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_text_style.dart';
 
 class ServiceOfGeolocation extends StatefulWidget {
-  const ServiceOfGeolocation({super.key});
+  // final CityCoordinate cityCoordinates;
+  // final WeatherForecastDetails weatherForecastDetails;
+  // final WeatherForecastHourlyDetails weatherForecastHourlyDetails;
+  // final AirPollutionDetails airPollutionDetails;
+
+  const ServiceOfGeolocation({
+    super.key,
+    // required this.cityCoordinates,
+    // required this.weatherForecastDetails,
+    // required this.weatherForecastHourlyDetails,
+    // required this.airPollutionDetails,
+  });
+
+
 
   @override
   State<ServiceOfGeolocation> createState() => _ServiceOfGeolocationState();
@@ -20,6 +39,12 @@ class _ServiceOfGeolocationState extends State<ServiceOfGeolocation> {
 
   String _currentAddress = '';
   String _currentCity = '';
+
+  CityCoordinate? cityCoordinate;
+  WeatherForecastDetails? weatherForecastDetails;
+  WeatherForecastHourlyDetails? weatherForecastHourlyDetails;
+  AirPollutionDetails? airPollutionDetails;
+
 
   Future<Position> _getCurrentLocation() async {
     bool serviceEnabled;
@@ -137,15 +162,7 @@ class _ServiceOfGeolocationState extends State<ServiceOfGeolocation> {
                 color: Colors.white.withOpacity(0.72),
               ),
             ),
-            // const SizedBox(height: 20),
-            // Text(
-            //   '$_currentLocation',
-            //   style: AppTextStyle.defaultTextDarkSemiBold.copyWith(
-            //     fontSize: 18,
-            //     fontWeight: FontWeight.w500,
-            //     color: Colors.white.withOpacity(0.72),
-            //   ),
-            // ),
+
             const SizedBox(height: 20),
             Text(
               'latitude = ${_currentLocation?.latitude}',
@@ -182,19 +199,43 @@ class _ServiceOfGeolocationState extends State<ServiceOfGeolocation> {
                 color: Colors.white.withOpacity(0.72),
               ),
             ),
-            const SizedBox(height: 80),
+            const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () async {
                 _currentLocation = await _getCurrentLocation();
-                // print('${_currentLocation!.latitude}');
-                // print('${_currentLocation!.longitude}');
 
                 await _getAddressFromCoordinates();
-                // print(_currentAddress);
-
-                // print('test here');
               },
               child: const Text('get Location'),
+            ),
+            const SizedBox(height: 80),
+            SizedBox(
+              height: 48,
+              child: ElevatedButton(
+                onPressed: () async {
+                  _currentLocation = await _getCurrentLocation();
+                  await _getAddressFromCoordinates();
+                  Navigator.push(
+                  context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailsScreen(
+                        cityCoordinate: cityCoordinate,
+                        weatherForecastDetails: weatherForecastDetails,
+                        weatherForecastHourlyDetails:
+                        weatherForecastHourlyDetails,
+                        airPollutionDetails: airPollutionDetails,
+
+                      ),
+                    ),
+                  );
+                },
+                child: const Column(
+                  children: [
+                    Text('Show the weather'),
+                    Text('in the selected city'),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

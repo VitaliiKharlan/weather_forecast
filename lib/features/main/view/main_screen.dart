@@ -64,6 +64,7 @@ class _MainScreenState extends State<MainScreen> {
       ],
     );
 
+    // cities?.clear();
     cityController.fetchListOfCities();
     cityController.addListener(() {
       setState(() {
@@ -162,7 +163,8 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: NavBar(
         cityCoordinates: cities,
         weatherForecastDetails: weatherForecastDetails,
-        weatherForecastHourlyDetails: weatherForecastHourlyDetails?.first,
+        weatherForecastHourlyDetails: weatherForecastHourlyDetails,
+        airPollutionDetails: airPollutionDetails,
         pageIndex: _selectedTab,
         onTap: (index) {
           if (index == _selectedTab) {
@@ -354,6 +356,7 @@ class DetailsInfoWidget extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => DetailsScreen(
+                  cityCoordinate: cityCoordinate,
                   weatherForecastDetails: weatherForecastDetails!,
                   airPollutionDetails: airPollutionDetails!,
                   weatherForecastHourlyDetails: weatherForecastHourlyDetails!,

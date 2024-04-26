@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:weather_forecast/features/favorite_cities/view/favorite_cities_screen.dart';
 import 'package:weather_forecast/features/service_of_geolocation/service_of_geolocation.dart';
 import 'package:weather_forecast/features/theme/app.images.dart';
+import 'package:weather_forecast/repositories/weather_details/models/air_pollution_details.dart';
 import 'package:weather_forecast/repositories/weather_details/models/city_coordinate.dart';
 import 'package:weather_forecast/repositories/weather_details/models/weather_forecast_details.dart';
 import 'package:weather_forecast/repositories/weather_details/models/weather_forecast_hourly_details.dart';
@@ -9,7 +10,14 @@ import 'package:weather_forecast/repositories/weather_details/models/weather_for
 class NavBar extends StatelessWidget {
   final List<CityCoordinate>? cityCoordinates;
   final List<WeatherForecastDetails>? weatherForecastDetails;
-  final WeatherForecastHourlyDetails? weatherForecastHourlyDetails;
+  final List<WeatherForecastHourlyDetails>? weatherForecastHourlyDetails;
+  final List<AirPollutionDetails>? airPollutionDetails;
+
+  // final CityCoordinate cityCoordinates;
+  // final WeatherForecastDetails weatherForecastDetails;
+  // final WeatherForecastHourlyDetails weatherForecastHourlyDetails;
+  // final AirPollutionDetails airPollutionDetails;
+
   final int pageIndex;
   final Function(int) onTap;
 
@@ -18,8 +26,10 @@ class NavBar extends StatelessWidget {
     required this.cityCoordinates,
     required this.weatherForecastDetails,
     required this.weatherForecastHourlyDetails,
+    required this.airPollutionDetails,
     required this.pageIndex,
     required this.onTap,
+
   });
 
   @override
@@ -67,7 +77,13 @@ class NavBar extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ServiceOfGeolocation(),
+                        builder: (context) => const ServiceOfGeolocation(
+                          // cityCoordinates: cityCoordinates,
+                          // weatherForecastDetails: weatherForecastDetails,
+                          // weatherForecastHourlyDetails:
+                          //     weatherForecastHourlyDetails,
+                          // airPollutionDetails: airPollutionDetails,
+                        ),
                       ),
                     );
                   },
@@ -84,6 +100,9 @@ class NavBar extends StatelessWidget {
                         builder: (context) => FavoriteCitiesWidget(
                           cityCoordinates: cityCoordinates,
                           weatherForecastDetails: weatherForecastDetails,
+                          weatherForecastHourlyDetails:
+                              weatherForecastHourlyDetails,
+                          airPollutionDetails: airPollutionDetails,
                         ),
                       ),
                     );

@@ -15,6 +15,7 @@ abstract class AppTheme {
       ),
     ),
     textTheme: TextTheme(
+
       bodyMedium: const TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.w500,
@@ -25,7 +26,9 @@ abstract class AppTheme {
         fontWeight: FontWeight.w700,
         fontSize: 14,
       ),
+
     ),
+
     dividerColor: Colors.white24,
     listTileTheme: const ListTileThemeData(iconColor: Colors.white),
     useMaterial3: true,
