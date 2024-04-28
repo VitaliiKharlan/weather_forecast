@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../repositories/local_weather_search/models/city_search_result.dart';
 import '../../controllers/city/city_controller.dart';
 import '../../theme/app_text_style.dart';
 import '../../../repositories/local_weather_search/local_weather_search_lat_lon_repository.dart';
@@ -7,15 +8,19 @@ import '../../../repositories/local_weather_search/local_weather_search_reposito
 import '../../../repositories/weather_details/models/weather_forecast_details.dart';
 
 class LocalWeatherSearch extends StatelessWidget {
-  // final LocalWeatherSearch localWeatherSearch;
+  // final LocalWeatherSearchLatLon localWeatherSearchLatLon;
 
-  const LocalWeatherSearch({
+  LocalWeatherSearch({
     super.key,
-    // required this.localWeatherSearch,
+    // required this.localWeatherSearchLatLon,
   });
+
+  CitySearchResult? citySearchResult;
 
   @override
   Widget build(BuildContext context) {
+    final modelCitySearchResult = citySearchResult;
+    final city = modelCitySearchResult?.name.toString();
     return Scaffold(
       backgroundColor: const Color(0xFF2E335A),
       appBar: AppBar(
@@ -47,12 +52,12 @@ class LocalWeatherSearch extends StatelessWidget {
           ),
         ],
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Local',
               style: TextStyle(
                 color: Colors.white,
@@ -60,7 +65,7 @@ class LocalWeatherSearch extends StatelessWidget {
                 fontSize: 40,
               ),
             ),
-            Text(
+            const Text(
               'Weather',
               style: TextStyle(
                 color: Colors.white,
@@ -68,9 +73,19 @@ class LocalWeatherSearch extends StatelessWidget {
                 fontSize: 40,
               ),
             ),
-            Text(
+            const Text(
               'Search',
+              // 'Search',
               style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 40,
+              ),
+            ),
+            Text(
+              '$city',
+              // 'Search',
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 40,
@@ -211,7 +226,7 @@ class CitySearch extends SearchDelegate<String> {
             query = suggestion;
             showResults(context);
             cityController.addNewCity('Energodar');
-            cityController.addNewCity('modelLocalWeatherSearch.key');
+
           },
           leading: const Icon(
             Icons.location_city,

@@ -41,6 +41,8 @@ dependencies:
 
   flutter_slidable: ^3.0.1
 
+  lottie: ^3.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -63,6 +65,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/svg/
+    - assets/lottie_animation/
 
   fonts:
 

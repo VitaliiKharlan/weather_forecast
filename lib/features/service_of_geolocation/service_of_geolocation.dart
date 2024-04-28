@@ -1,41 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:weather_forecast/features/controllers/city/city_controller.dart';
-import 'package:weather_forecast/features/details/view/details_screen.dart';
+import 'package:lottie/lottie.dart';
 
-import 'package:weather_forecast/repositories/weather_details/models/air_pollution_details.dart';
-import 'package:weather_forecast/repositories/weather_details/models/city_coordinate.dart';
-import 'package:weather_forecast/repositories/weather_details/models/weather_forecast_details.dart';
-import 'package:weather_forecast/repositories/weather_details/models/weather_forecast_hourly_details.dart';
+import '../controllers/city/city_controller.dart';
+
+import '../main/view/main_screen.dart';
+
+import '../../repositories/weather_details/models/air_pollution_details.dart';
+import '../../repositories/weather_details/models/city_coordinate.dart';
+import '../../repositories/weather_details/models/weather_forecast_details.dart';
+import '../../repositories/weather_details/models/weather_forecast_hourly_details.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_text_style.dart';
 
 class ServiceOfGeolocation extends StatefulWidget {
-  // final CityCoordinate cityCoordinates;
-  // final WeatherForecastDetails weatherForecastDetails;
-  // final WeatherForecastHourlyDetails weatherForecastHourlyDetails;
-  // final AirPollutionDetails airPollutionDetails;
-
   const ServiceOfGeolocation({
     super.key,
-    // required this.cityCoordinates,
-    // required this.weatherForecastDetails,
-    // required this.weatherForecastHourlyDetails,
-    // required this.airPollutionDetails,
   });
-
-
 
   @override
   State<ServiceOfGeolocation> createState() => _ServiceOfGeolocationState();
 }
 
-class _ServiceOfGeolocationState extends State<ServiceOfGeolocation> {
+class _ServiceOfGeolocationState extends State<ServiceOfGeolocation>
+    with SingleTickerProviderStateMixin {
   Position? _currentLocation;
   late bool servicePermission = false;
   late LocationPermission permission;
+  late AnimationController _controller;
+
+  bool _isLoaded = false;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 50000),
+    );
+
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        setState(() {
+          _isLoaded = true;
+        });
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   String _currentAddress = '';
   String _currentCity = '';
@@ -44,7 +63,6 @@ class _ServiceOfGeolocationState extends State<ServiceOfGeolocation> {
   WeatherForecastDetails? weatherForecastDetails;
   WeatherForecastHourlyDetails? weatherForecastHourlyDetails;
   AirPollutionDetails? airPollutionDetails;
-
 
   Future<Position> _getCurrentLocation() async {
     bool serviceEnabled;
@@ -74,8 +92,8 @@ class _ServiceOfGeolocationState extends State<ServiceOfGeolocation> {
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error('Location permissions are permanently denied, '
+          'we cannot request permissions.');
     }
 
     // When we reach here, permissions are granted and we can
@@ -98,6 +116,12 @@ class _ServiceOfGeolocationState extends State<ServiceOfGeolocation> {
     } catch (e) {
       // print(e);
     }
+  }
+
+  _getLoaded() async {
+    setState(() {
+      _isLoaded = true;
+    });
   }
 
   @override
@@ -151,9 +175,10 @@ class _ServiceOfGeolocationState extends State<ServiceOfGeolocation> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const SizedBox(height: 20),
             Text(
               'Location Coordinate',
               style: AppTextStyle.defaultTextDarkSemiBold.copyWith(
@@ -162,7 +187,6 @@ class _ServiceOfGeolocationState extends State<ServiceOfGeolocation> {
                 color: Colors.white.withOpacity(0.72),
               ),
             ),
-
             const SizedBox(height: 20),
             Text(
               'latitude = ${_currentLocation?.latitude}',
@@ -200,42 +224,37 @@ class _ServiceOfGeolocationState extends State<ServiceOfGeolocation> {
               ),
             ),
             const SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () async {
-                _currentLocation = await _getCurrentLocation();
-
-                await _getAddressFromCoordinates();
-              },
-              child: const Text('get Location'),
-            ),
-            const SizedBox(height: 80),
             SizedBox(
               height: 48,
+              width: 200,
               child: ElevatedButton(
                 onPressed: () async {
-                  _currentLocation = await _getCurrentLocation();
-                  await _getAddressFromCoordinates();
-                  Navigator.push(
-                  context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailsScreen(
-                        cityCoordinate: cityCoordinate,
-                        weatherForecastDetails: weatherForecastDetails,
-                        weatherForecastHourlyDetails:
-                        weatherForecastHourlyDetails,
-                        airPollutionDetails: airPollutionDetails,
-
+                  if (_currentCity.isEmpty) {
+                    _currentLocation = await _getCurrentLocation();
+                    await _getAddressFromCoordinates();
+                    _getLoaded();
+                  } else {
+                    Navigator.pop(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MainScreen(),
                       ),
-                    ),
-                  );
+                    );
+                  }
                 },
-                child: const Column(
-                  children: [
-                    Text('Show the weather'),
-                    Text('in the selected city'),
-                  ],
-                ),
+                child: _currentCity.isEmpty
+                    ? const Text('Add Current City')
+                    : const Text('Go to the Main Screen'),
               ),
+            ),
+            const SizedBox(height: 4),
+            Lottie.asset(
+              'assets/lottie_animation/hare.json',
+              controller: _controller,
+              onLoaded: (comp) {
+                _controller.duration = comp.duration;
+                _controller.forward();
+              },
             ),
           ],
         ),

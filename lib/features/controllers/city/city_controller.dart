@@ -38,9 +38,10 @@ class CityController extends ChangeNotifier {
 
   void deleteFavoriteCity(String name) {
     _cityNames.remove(name);
-
     fetchListOfCities();
   }
+
+
 
 // void onFavoriteCityTap(BuildContext context, int index) {
 //   final id = _cityNames[index];

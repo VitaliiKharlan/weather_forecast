@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 abstract class AppColors {
+  static const Color solidDarkBackgroundMainScreen = Color(0xFF30345B);
+
   static const Color solidDarkHourlyButtonShort1 = Color(0xFF48319D);
   static const Color solidDarkParametersButtonShort2 = Color(0xFF48319D);
 

@@ -1,10 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'local_weather_search.g.dart';
+part 'city_search_result.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
-class LocalWeatherSearch {
-  LocalWeatherSearch({
+class CitySearchResult {
+  CitySearchResult({
     required this.name,
     required this.lat,
     required this.lon,
@@ -16,10 +16,10 @@ class LocalWeatherSearch {
   final double lon;
   final String country;
 
-  factory LocalWeatherSearch.fromJson(Map<String, dynamic> json) =>
-      _$LocalWeatherSearchFromJson(json);
+  factory CitySearchResult.fromJson(Map<String, dynamic> json) =>
+      _$CitySearchResultFromJson(json);
 
-  Map<String, dynamic> toJson() => _$LocalWeatherSearchToJson(this);
+  Map<String, dynamic> toJson() => _$CitySearchResultToJson(this);
 
   @override
   String toString() {

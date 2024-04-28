@@ -1,20 +1,20 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'local_weather_search.dart';
+part of 'city_search_result.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-LocalWeatherSearch _$LocalWeatherSearchFromJson(Map<String, dynamic> json) =>
-    LocalWeatherSearch(
+CitySearchResult _$CitySearchResultFromJson(Map<String, dynamic> json) =>
+    CitySearchResult(
       name: json['name'] as String,
       lat: (json['lat'] as num).toDouble(),
       lon: (json['lon'] as num).toDouble(),
       country: json['country'] as String,
     );
 
-Map<String, dynamic> _$LocalWeatherSearchToJson(LocalWeatherSearch instance) =>
+Map<String, dynamic> _$CitySearchResultToJson(CitySearchResult instance) =>
     <String, dynamic>{
       'name': instance.name,
       'lat': instance.lat,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
+import 'package:weather_forecast/features/theme/app_colors.dart';
 
 import '../../details/view/details_screen.dart';
 import '../../local_weather_search/view/local_weather_search_screen.dart';
@@ -50,8 +51,6 @@ class _MainScreenState extends State<MainScreen> {
   List<AirPollutionDetails>? airPollutionDetails;
   List<WeatherForecastHourlyDetails>? weatherForecastHourlyDetails;
 
-  // LocalWeatherSearch? localWeatherSearch;
-
   @override
   void initState() {
     super.initState();
@@ -64,7 +63,7 @@ class _MainScreenState extends State<MainScreen> {
       ],
     );
 
-    // cities?.clear();
+
     cityController.fetchListOfCities();
     cityController.addListener(() {
       setState(() {
@@ -125,66 +124,71 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final localWeatherSearch = 'Berlin';
-    return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        margin: const EdgeInsets.only(top: 88),
-        height: 80,
-        width: 80,
-        child: FloatingActionButton(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const LocalWeatherSearch()
-                  // builder: (context) => (localWeatherSearch == null)
-                  //     ? const Center(child: CircularProgressIndicator())
-                  //     : LocalWeatherSearch(
-                  //     localWeatherSearch: localWeatherSearch!,
-                  //   ),
-                  ),
-            );
-          },
-          shape: RoundedRectangleBorder(
-            side: const BorderSide(
-              width: 4,
-              color: Color(0xFF5B5F78),
+    if (weatherForecastDetails != null) {
+      return Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Container(
+          margin: const EdgeInsets.only(top: 88),
+          height: 80,
+          width: 80,
+          child: FloatingActionButton(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LocalWeatherSearch()),
+              );
+            },
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(
+                width: 4,
+                color: Color(0xFF5B5F78),
+              ),
+              borderRadius: BorderRadius.circular(100),
             ),
-            borderRadius: BorderRadius.circular(100),
-          ),
-          child: const Icon(
-            Icons.add,
-            color: Color(0xFF48319D),
+            child: const Icon(
+              Icons.add,
+              color: Color(0xFF48319D),
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: NavBar(
-        cityCoordinates: cities,
-        weatherForecastDetails: weatherForecastDetails,
-        weatherForecastHourlyDetails: weatherForecastHourlyDetails,
-        airPollutionDetails: airPollutionDetails,
-        pageIndex: _selectedTab,
-        onTap: (index) {
-          if (index == _selectedTab) {
-            items[index]
-                .navKey
-                .currentState
-                ?.popUntil((route) => route.isFirst);
-          } else {
-            setState(() {
-              _selectedTab = index;
-            });
-          }
-        },
-      ),
-      backgroundColor: Colors.lightBlueAccent,
-      body: PageBuilderWidget(
-        cities: cities,
-        weatherForecastDetails: weatherForecastDetails,
-        airPollutionDetails: airPollutionDetails,
-        weatherForecastHourlyDetails: weatherForecastHourlyDetails,
+        bottomNavigationBar: NavBar(
+          cityCoordinates: cities,
+          weatherForecastDetails: weatherForecastDetails,
+          weatherForecastHourlyDetails: weatherForecastHourlyDetails,
+          airPollutionDetails: airPollutionDetails,
+          pageIndex: _selectedTab,
+          onTap: (index) {
+            if (index == _selectedTab) {
+              items[index]
+                  .navKey
+                  .currentState
+                  ?.popUntil((route) => route.isFirst);
+            } else {
+              setState(() {
+                _selectedTab = index;
+              });
+            }
+          },
+        ),
+        backgroundColor: AppColors.solidDarkBackgroundMainScreen,
+        body: PageBuilderWidget(
+          cities: cities,
+          weatherForecastDetails: weatherForecastDetails,
+          airPollutionDetails: airPollutionDetails,
+          weatherForecastHourlyDetails: weatherForecastHourlyDetails,
+        ),
+      );
+    }
+    return const ColoredBox(
+      color: AppColors.solidDarkBackgroundMainScreen,
+      child: Center(
+        child: SizedBox(
+          height: 80,
+          width: 80,
+          child: CircularProgressIndicator(),
+        ),
       ),
     );
   }
@@ -243,7 +247,6 @@ class _PageBuilderWidgetState extends State<PageBuilderWidget> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List<Widget>.generate(
-              // 4,
               widget.cities?.length ?? 0,
               (index) => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -320,102 +323,112 @@ class DetailsInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final modelWeatherForecastDetails = weatherForecastDetails;
-    final currentTemp = modelWeatherForecastDetails?.main.temp;
-    final currentTempRound = currentTemp?.toStringAsFixed(0).toString();
+    // if (weatherForecastDetails != null) {
+      final modelWeatherForecastDetails = weatherForecastDetails;
+      final currentTemp = modelWeatherForecastDetails?.main.temp;
+      final currentTempRound = currentTemp?.toStringAsFixed(0).toString();
 
-    final description =
-        modelWeatherForecastDetails?.weather.first.description.toString();
-    final descriptionFirstUp = toBeginningOfSentenceCase('$description');
+      final description =
+          modelWeatherForecastDetails?.weather.first.description.toString();
+      final descriptionFirstUp = toBeginningOfSentenceCase('$description');
 
-    final tempMax = modelWeatherForecastDetails?.main.tempMax;
-    final tempMaxRound = tempMax?.toStringAsFixed(0).toString();
+      final tempMax = modelWeatherForecastDetails?.main.tempMax;
+      final tempMaxRound = tempMax?.toStringAsFixed(0).toString();
 
-    final tempMin = modelWeatherForecastDetails?.main.tempMin;
-    final tempMinRound = tempMin?.toStringAsFixed(0).toString();
+      final tempMin = modelWeatherForecastDetails?.main.tempMin;
+      final tempMinRound = tempMin?.toStringAsFixed(0).toString();
 
-    final modelCityCoordinate = cityCoordinate;
-    final cityName = modelCityCoordinate.name.toString();
-    final countryName = modelCityCoordinate.country.toString().toUpperCase();
+      final modelCityCoordinate = cityCoordinate;
+      final cityName = modelCityCoordinate.name.toString();
+      final countryName = modelCityCoordinate.country.toString().toUpperCase();
 
-    final modelAirPollutionDetails = airPollutionDetails;
-    final concentrationOfCO =
-        modelAirPollutionDetails?.list.first.components.co.toString();
+      final modelAirPollutionDetails = airPollutionDetails;
+      final concentrationOfCO =
+          modelAirPollutionDetails?.list.first.components.co.toString();
 
-    final modelWeatherForecastHourlyDetails = weatherForecastHourlyDetails;
-    final seaLevel =
-        modelWeatherForecastHourlyDetails?.list.first.main.seaLevel.toString();
+      final modelWeatherForecastHourlyDetails = weatherForecastHourlyDetails;
+      final seaLevel = modelWeatherForecastHourlyDetails
+          ?.list.first.main.seaLevel
+          .toString();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const SizedBox(height: 72),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DetailsScreen(
-                  cityCoordinate: cityCoordinate,
-                  weatherForecastDetails: weatherForecastDetails!,
-                  airPollutionDetails: airPollutionDetails!,
-                  weatherForecastHourlyDetails: weatherForecastHourlyDetails!,
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(height: 72),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailsScreen(
+                    cityCoordinate: cityCoordinate,
+                    weatherForecastDetails: weatherForecastDetails!,
+                    airPollutionDetails: airPollutionDetails!,
+                    weatherForecastHourlyDetails: weatherForecastHourlyDetails!,
+                  ),
                 ),
-              ),
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.transparent,
-            shadowColor: Colors.transparent,
-            shape:
-                const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+              shape:
+                  const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+            ),
+            child: Text(
+              '$cityName, $countryName',
+              style: AppTextStyle.defaultRegularLargeTitle
+                  .copyWith(color: Colors.white),
+            ),
           ),
-          child: Text(
-            '$cityName, $countryName',
-            style: AppTextStyle.defaultRegularLargeTitle
+          Text(
+            '$currentTempRound\u00B0',
+            style: AppTextStyle.defaultThinLargeTitle
                 .copyWith(color: Colors.white),
           ),
-        ),
-        Text(
-          '$currentTempRound\u00B0',
-          style:
-              AppTextStyle.defaultThinLargeTitle.copyWith(color: Colors.white),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 80),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                '$descriptionFirstUp',
-                style: AppTextStyle.defaultSemiBoldLargeTitle
-                    .copyWith(color: Colors.white24),
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 80),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  '$descriptionFirstUp',
+                  style: AppTextStyle.defaultSemiBoldLargeTitle
+                      .copyWith(color: Colors.white24),
+                ),
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: 12),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 120),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                // '$latCoord',
-                'H: $tempMaxRound\u00B0',
-                style: AppTextStyle.defaultSemiBoldLargeTitle
-                    .copyWith(color: Colors.white),
-              ),
-              Text(
-                'L: $tempMinRound\u00B0',
-                style: AppTextStyle.defaultSemiBoldLargeTitle
-                    .copyWith(color: Colors.white),
-              ),
-            ],
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 120),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  // '$latCoord',
+                  'H: $tempMaxRound\u00B0',
+                  style: AppTextStyle.defaultSemiBoldLargeTitle
+                      .copyWith(color: Colors.white),
+                ),
+                Text(
+                  'L: $tempMinRound\u00B0',
+                  style: AppTextStyle.defaultSemiBoldLargeTitle
+                      .copyWith(color: Colors.white),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    // }
+    // return const Center(
+    //   child: SizedBox(
+    //     height: 80,
+    //     width: 80,
+    //     child: CircularProgressIndicator(),
+    //   ),
+    // );
   }
 }
 
