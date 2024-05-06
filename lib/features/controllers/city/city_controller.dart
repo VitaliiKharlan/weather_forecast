@@ -32,22 +32,13 @@ class CityController extends ChangeNotifier {
     fetchListOfCities();
   }
 
-  // void deleteFavoriteCities(List<String> cities) {
-  //   _cityNames.remove(cities);
-  // }
-
   void deleteFavoriteCity(String name) {
     _cityNames.remove(name);
     fetchListOfCities();
   }
 
-
-
-// void onFavoriteCityTap(BuildContext context, int index) {
-//   final id = _cityNames[index];
-//   Navigator.of(context).pushNamed(
-//     id,
-//     arguments: id,
-//   );
-// }
+  void addMyGeoPosition(String name) {
+    _cityNames.insert(0, name);
+    fetchListOfCities();
+  }
 }

@@ -1,29 +1,20 @@
 import 'package:flutter/material.dart';
 
+import '../../../repositories/weather_details.dart';
 import '../../favorite_cities/view/favorite_cities_screen.dart';
 import '../../service_of_geolocation/service_of_geolocation.dart';
 import '../../theme/app.images.dart';
-import '../../../repositories/weather_details/models/air_pollution_details.dart';
-import '../../../repositories/weather_details/models/city_coordinate.dart';
-import '../../../repositories/weather_details/models/weather_forecast_details.dart';
-import '../../../repositories/weather_details/models/weather_forecast_hourly_details.dart';
 
 class NavBar extends StatelessWidget {
-  final List<CityCoordinate>? cityCoordinates;
-  final List<WeatherForecastDetails>? weatherForecastDetails;
-  final List<WeatherForecastHourlyDetails>? weatherForecastHourlyDetails;
-  final List<AirPollutionDetails>? airPollutionDetails;
+  final List<WeatherDetails> listOfWeatherDetails;
 
   final int pageIndex;
   final Function(int) onTap;
 
   const NavBar({
     super.key,
-    required this.cityCoordinates,
-    required this.weatherForecastDetails,
-    required this.weatherForecastHourlyDetails,
-    required this.airPollutionDetails,
     required this.pageIndex,
+    required this.listOfWeatherDetails,
     required this.onTap,
   });
 
@@ -85,12 +76,7 @@ class NavBar extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => FavoriteCitiesWidget(
-                          cityCoordinates: cityCoordinates,
-                          weatherForecastDetails: weatherForecastDetails,
-                          weatherForecastHourlyDetails:
-                              weatherForecastHourlyDetails,
-                          airPollutionDetails: airPollutionDetails,
-                        ),
+                            listOfWeatherDetails: listOfWeatherDetails),
                       ),
                     );
                   },

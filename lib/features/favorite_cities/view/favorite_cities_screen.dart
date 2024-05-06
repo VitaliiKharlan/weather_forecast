@@ -2,27 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 
+import '../../../repositories/weather_details.dart';
+
 import '../../controllers/city/city_controller.dart';
 import '../../details/view/details_screen.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_style.dart';
-import '../../../repositories/weather_details/models/air_pollution_details.dart';
-import '../../../repositories/weather_details/models/city_coordinate.dart';
-import '../../../repositories/weather_details/models/weather_forecast_hourly_details.dart';
-import '../../../../repositories/weather_details/models/weather_forecast_details.dart';
+
 
 class FavoriteCitiesWidget extends StatefulWidget {
-  final List<CityCoordinate>? cityCoordinates;
-  final List<WeatherForecastDetails>? weatherForecastDetails;
-  final List<WeatherForecastHourlyDetails>? weatherForecastHourlyDetails;
-  final List<AirPollutionDetails>? airPollutionDetails;
+  final List<WeatherDetails> listOfWeatherDetails;
 
   const FavoriteCitiesWidget({
     super.key,
-    required this.cityCoordinates,
-    required this.weatherForecastDetails,
-    required this.weatherForecastHourlyDetails,
-    required this.airPollutionDetails,
+    required this.listOfWeatherDetails,
   });
 
   @override
@@ -30,8 +23,7 @@ class FavoriteCitiesWidget extends StatefulWidget {
 }
 
 class _FavoriteCitiesWidgetState extends State<FavoriteCitiesWidget> {
-  // List<CityCoordinate>? cities = [];
-  // List<WeatherForecastDetails>? weatherForecastDetails;
+
 
   @override
   Widget build(BuildContext context) {
@@ -91,17 +83,13 @@ class _FavoriteCitiesWidgetState extends State<FavoriteCitiesWidget> {
         child: ListView.builder(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
-          itemCount: widget.cityCoordinates?.length,
+          itemCount: widget.listOfWeatherDetails.length,
           itemExtent: 104,
           itemBuilder: (BuildContext context, int index) {
             return _FavoriteCitiesItemWidget(
-              cityCoordinates: widget.cityCoordinates![index],
-              weatherForecastDetails: widget.weatherForecastDetails![index],
-              weatherForecastHourlyDetails:
-                  widget.weatherForecastHourlyDetails![index],
-              airPollutionDetails: widget.airPollutionDetails![index],
-              // index: ,
-            );
+                weatherDetails: widget.listOfWeatherDetails[index]
+                // index: ,
+                );
           },
         ),
       ),
@@ -110,44 +98,33 @@ class _FavoriteCitiesWidgetState extends State<FavoriteCitiesWidget> {
 }
 
 class _FavoriteCitiesItemWidget extends StatelessWidget {
-  final CityCoordinate cityCoordinates;
-  final WeatherForecastDetails weatherForecastDetails;
-  final WeatherForecastHourlyDetails weatherForecastHourlyDetails;
-  final AirPollutionDetails airPollutionDetails;
-
-  // final String index;
+  final WeatherDetails weatherDetails;
 
   const _FavoriteCitiesItemWidget({
-    required this.cityCoordinates,
-    required this.weatherForecastDetails,
-    required this.weatherForecastHourlyDetails,
-    required this.airPollutionDetails,
-
-    // required this.index,
+    required this.weatherDetails,
   });
 
   @override
   Widget build(BuildContext context) {
-    final modelWeatherForecastDetails = weatherForecastDetails;
+    final weatherForecastDetailsModel = weatherDetails.weatherForecastDetails;
 
-    final city = modelWeatherForecastDetails.name.toString();
+    final city = weatherForecastDetailsModel.name.toString();
     final description =
-        modelWeatherForecastDetails.weather.first.description.toString();
-    final descriptionFirstUp = toBeginningOfSentenceCase(description);
+        weatherForecastDetailsModel.weather.first.description.toString();
 
-    var now = DateTime.now().toUtc();
+    final descriptionFirstUp = toBeginningOfSentenceCase(description);
 
     var formatterTime = DateFormat('kk:mm');
 
-    String actualTime = formatterTime.format(now);
+    String actualTime = formatterTime.format(weatherDetails.addedAt);
 
-    final currentTemp = modelWeatherForecastDetails.main.temp;
+    final currentTemp = weatherDetails.weatherForecastDetails.main.temp;
     final currentTempRound = currentTemp.toStringAsFixed(0).toString();
 
-    final tempMax = modelWeatherForecastDetails.main.tempMax;
+    final tempMax = weatherDetails.weatherForecastDetails.main.tempMax;
     final tempMaxRound = tempMax.toStringAsFixed(0).toString();
 
-    final tempMin = modelWeatherForecastDetails.main.tempMin;
+    final tempMin = weatherDetails.weatherForecastDetails.main.tempMin;
     final tempMinRound = tempMin.toStringAsFixed(0).toString();
 
     return Padding(
@@ -179,10 +156,7 @@ class _FavoriteCitiesItemWidget extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => DetailsScreen(
-                    cityCoordinate: cityCoordinates,
-                    weatherForecastDetails: weatherForecastDetails,
-                    airPollutionDetails: airPollutionDetails,
-                    weatherForecastHourlyDetails: weatherForecastHourlyDetails,
+                    weatherDetails: weatherDetails,
                   ),
                 ),
               );
@@ -274,3 +248,18 @@ class _FavoriteCitiesItemWidget extends StatelessWidget {
     );
   }
 }
+
+// class WeatherDetails {
+//   final DateTime addedAt;
+//   final CityCoordinate cityCoordinates;
+//   final WeatherForecastDetails weatherForecastDetails;
+//   final WeatherForecastHourlyDetails weatherForecastHourlyDetails;
+//   final AirPollutionDetails airPollutionDetails;
+//
+//   WeatherDetails(
+//       {required this.addedAt,
+//       required this.cityCoordinates,
+//       required this.weatherForecastDetails,
+//       required this.weatherForecastHourlyDetails,
+//       required this.airPollutionDetails});
+// }

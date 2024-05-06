@@ -1,28 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:weather_forecast/features/theme/app_colors.dart';
-import 'package:weather_forecast/features/theme/app_text_style.dart';
-import 'package:weather_forecast/repositories/weather_details/models/city_coordinate.dart';
 
-import '../../../repositories/weather_details/models/weather_forecast_hourly_details.dart';
-import '../../../repositories/weather_details/models/air_pollution_details.dart';
-import '../../../repositories/weather_details/models/weather_forecast_details.dart';
+import '../../theme/app_colors.dart';
+import '../../theme/app_text_style.dart';
+import '../../../repositories/weather_details.dart';
 import '../widgets/air_quality_details_widget.dart';
 import '../widgets/hourly_weekly_details.dart';
 import '../widgets/main_details_widget.dart';
 import '../widgets/parameters_details_widget.dart';
 
 class DetailsScreen extends StatefulWidget {
-  final CityCoordinate? cityCoordinate;
-  final WeatherForecastDetails? weatherForecastDetails;
-  final AirPollutionDetails? airPollutionDetails;
-  final WeatherForecastHourlyDetails? weatherForecastHourlyDetails;
+  final WeatherDetails weatherDetails;
 
   const DetailsScreen({
     super.key,
-    required this.cityCoordinate,
-    required this.weatherForecastDetails,
-    required this.airPollutionDetails,
-    required this.weatherForecastHourlyDetails,
+    required this.weatherDetails,
+
   });
 
   @override
@@ -65,20 +57,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
         children: [
           const SizedBox(height: 20),
           MainDetailsWidget(
-            weatherForecastDetails: widget.weatherForecastDetails,
+            weatherForecastDetails: widget.weatherDetails.weatherForecastDetails,
           ),
           const SizedBox(height: 24),
           HourlyWeeklyDetailsWidget(
-            weatherForecastDetails: widget.weatherForecastDetails,
-            weatherForecastHourlyDetails: widget.weatherForecastHourlyDetails,
+            weatherForecastDetails: widget.weatherDetails.weatherForecastDetails,
+            weatherForecastHourlyDetails: widget.weatherDetails.weatherForecastHourlyDetails,
           ),
           const SizedBox(height: 8),
           AirQualityDetailsWidget(
-            airPollutionDetails: widget.airPollutionDetails,
+            airPollutionDetails: widget.weatherDetails.airPollutionDetails,
           ),
           const SizedBox(height: 12),
           ParametersDetailsWidget(
-            weatherForecastDetails: widget.weatherForecastDetails,
+            weatherForecastDetails: widget.weatherDetails.weatherForecastDetails,
           ),
         ],
       ),
